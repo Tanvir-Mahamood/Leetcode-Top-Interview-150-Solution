@@ -1,7 +1,6 @@
 class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
-        vector<int> ans;
         int row, col, starting_row, starting_col, ending_row, ending_col, total, count = 0, i;
 
         row = matrix.size();
@@ -13,33 +12,26 @@ public:
         ending_col = col - 1;
 
         total = row * col;
+        vector<int> ans(total);
 
         while(count < total) {
-            // go left to right
-            for(i=starting_col; i<=ending_col && count < total; i++) {
-                ans.push_back(matrix[starting_row][i]);
-                count++;
+            for(i=starting_col; i<=ending_col && count < total; i++) { // go left to right
+                ans[count++] = matrix[starting_row][i];
             }
             starting_row++;
 
-            // go up to down
-            for(i=starting_row; i<=ending_row && count < total; i++) {
-                ans.push_back(matrix[i][ending_col]);
-                count++;
+            for(i=starting_row; i<=ending_row && count < total; i++) { // go up to down
+                ans[count++] = matrix[i][ending_col];
             }
             ending_col--;
 
-            // go right to left
-            for(i=ending_col; i>=starting_col && count < total; i--) {
-                ans.push_back(matrix[ending_row][i]);
-                count++;
+            for(i=ending_col; i>=starting_col && count < total; i--) { // go right to left
+                ans[count++] = matrix[ending_row][i];
             }
             ending_row--;
 
-            // go down to up
-            for(i=ending_row; i>=starting_row && count < total; i--) {
-                ans.push_back(matrix[i][starting_col]);
-                count++;
+            for(i=ending_row; i>=starting_row && count < total; i--) { // go down to up
+                ans[count++] = matrix[i][starting_col];
             }
             starting_col++;
         }
