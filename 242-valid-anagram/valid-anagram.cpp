@@ -3,18 +3,14 @@ public:
     bool isAnagram(string s, string t) {
         if(s.size() != t.size()) return false;
         vector<int> freq(26, 0);
-        for(char ch: s) {
-            int idx = ch - 'a';
-            freq[idx]++;
+        for(int i=0; i<s.size(); i++) {
+            int ch1 = s[i] - 'a';
+            int ch2 = t[i] - 'a';
+            freq[ch1]++;
+            freq[ch2]--;
         }
-        for(char ch: t) {
-            int idx = ch - 'a';
-            freq[idx]--;
-            if(freq[idx] < 0) return false;
-        }
-
         for(int i=0; i<26; i++) {
-            if(freq[i] != 0) return false;
+            if(freq[i] != 0 ) return false;
         }
         return true;
     }
