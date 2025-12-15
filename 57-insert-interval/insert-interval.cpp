@@ -1,7 +1,6 @@
 class Solution {
 public:
     // https://leetcode.com/problems/merge-intervals/?envType=study-plan-v2&envId=top-interview-150
-
     vector<vector<int>> merge(vector<vector<int>>& intervals) { 
         // sort(intervals.begin(), intervals.end());
         vector<int> temp(2), current = intervals[0];
@@ -24,26 +23,24 @@ public:
     }
 
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
-        int i, n = intervals.size();
-        vector<vector<int>> arr(n+1);
+        int i = 0, n = intervals.size(), j = 0;
+        vector<vector<int>> result(n+1);
 
-        if(n == 0) arr[0] = newInterval;
-        
-        for(i=0; i<n; i++) {
-            if(intervals[i][0] < newInterval[0]) arr[i] = intervals[i];
-            else {
-                arr[i] = newInterval;
-                break;
-            } 
+        bool inserted = false;
+
+        for (vector<int> element : intervals) {
+            if (!inserted && newInterval[0] <= element[0]) {
+                result[j++] = newInterval;
+                inserted = true;
+            }
+            result[j++] = element;
         }
 
-        if(i == n) arr[i] = newInterval;
-
-        for(; i<n; i++) {
-            arr[i+1] = intervals[i];
+        if (!inserted) {
+            result[j] = newInterval;
         }
 
-        vector<vector<int>> ans = merge(arr);
+        vector<vector<int>> ans = merge(result);
         return ans;
     }
 };
