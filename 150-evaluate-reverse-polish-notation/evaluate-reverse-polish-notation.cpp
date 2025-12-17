@@ -2,14 +2,15 @@ class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
         stack<int> st;
-        int ans = 0;
+        int operand, operand1, operand2, result;
+
         for(string term: tokens) {
             if(term == "+" || term == "-" || term == "*" || term == "/") {
-                int operand2 = st.top();
+                operand2 = st.top();
                 st.pop();
-                int operand1 = st.top();
+                operand1 = st.top();
                 st.pop(); 
-                int result;
+
                 if(term == "+") result = (operand1 + operand2);
                 else if(term == "-") result = (operand1 - operand2);
                 else if(term == "*") result = (operand1 * operand2);
@@ -17,7 +18,7 @@ public:
                 st.push(result);
             }
             else {
-                int operand = stoi(term);
+                operand = stoi(term);
                 st.push(operand);
             }
         }
