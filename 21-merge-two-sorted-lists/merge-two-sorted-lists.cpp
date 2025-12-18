@@ -37,6 +37,8 @@ public:
                 list2 = list2->next;
             }
         }
-        return head->next;
+        head = head->next;
+        delete judge;
+        return head;
     }
 };
