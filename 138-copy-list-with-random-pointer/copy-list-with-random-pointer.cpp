@@ -19,6 +19,7 @@ public:
     Node* copyRandomList(Node* head) {
         unordered_map<Node*, Node*> mapping;
         Node* curr = head;
+
         while(curr) {
             mapping[curr] = new Node(curr->val);
             curr = curr->next;
@@ -32,6 +33,7 @@ public:
             curr = curr->next;
         }
 
+        delete curr;
         return mapping[head];
     }
 };
