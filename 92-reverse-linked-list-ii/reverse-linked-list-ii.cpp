@@ -15,7 +15,7 @@ public:
 
         ListNode* HEAD = new ListNode(0, head);
         ListNode*  TAIL(0);
-        ListNode* curr = HEAD;
+        head = HEAD;
         ListNode* num1;
         ListNode* num2;
         ListNode* num3;
@@ -23,15 +23,15 @@ public:
         ListNode* prev_left;
         int i, cnt = 0, len = right - left; 
 
-        while(curr->next) {
+        while(head->next) {
             if(cnt == left - 1) {
-                prev_left = curr;
-                lft = curr->next;
+                prev_left = head;
+                lft = head->next;
             }
-            curr = curr->next;
+            head = head->next;
             cnt++;
         }
-        curr->next = TAIL;
+        head->next = TAIL;
 
         num1 = lft;
         num2 = lft->next;
@@ -43,14 +43,13 @@ public:
             num2 = num3;
             num3 = num3->next;
         }
-
         num2->next = num1;
 
         prev_left->next = num2;
         lft->next = num3;
-        // else lft->next = nullptr;
+        lft->next = (num3 == TAIL) ? nullptr : num3;
+        HEAD = HEAD->next;
 
-
-        return HEAD->next;
+        return HEAD;
     }
 };
