@@ -14,9 +14,9 @@ public:
         if(!head || !head->next) return head;
 
         ListNode* dummy = new ListNode(0, head);
-        int len = 1, part1, part2;
-        ListNode* curr = head;
-        ListNode* prev;
+        int len = 0, segment;
+        ListNode* curr = dummy;
+        ListNode* temp;
 
         while(curr->next) {
             curr = curr->next;
@@ -25,28 +25,26 @@ public:
 
         k %= len;
         if(k == 0) return head;
+
+        segment = len - k;
+
+        temp = dummy;
+        while(segment--) {
+            temp = temp->next;
+        }
         
-        part1 = len - k;
-        part2 = part1 + 1;
+        dummy->next = temp->next;
+        temp->next = nullptr;
+        temp = dummy->next;
 
-        curr = dummy;
-        while(part1) {
-            curr = curr->next;
-            part1--;
+        while(temp->next) {
+            temp = temp->next;
         }
-        prev = curr;
-        curr = curr->next;
+        temp->next = head;
 
-        prev->next = nullptr;
-        prev = curr;
-        while(curr->next) {
-            curr = curr->next;
-        }
-
-        curr->next = head;
-        dummy->next = prev;
-
-        return dummy->next;
+        temp = dummy->next;
+        delete dummy;
+        return temp;
 
     }
 };
