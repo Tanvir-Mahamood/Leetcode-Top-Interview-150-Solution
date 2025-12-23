@@ -44,6 +44,9 @@ public:
 
 
     LRUCache(int capacity) {
+        ios::sync_with_stdio(false);
+        cin.tie(0);
+
         cap = capacity;
 
         // DLL initialization
@@ -90,14 +93,19 @@ public:
         update the hashmap with latest key-value 
     */
     void put(int key, int value) {
+        Node* currNode;
         if(mp.find(key) != mp.end()) { // key found, update it 
-            Node* currNode = mp[key];
+            currNode = mp[key];
             deleteNode(currNode);
         }
         else if(mp.size() == cap) { // fully loaded, update it with least recently used key
-            mp.erase(tail->prev->key);
-            deleteNode(tail->prev);
+            currNode = tail->prev;
+            mp.erase(currNode->key);
+            deleteNode(currNode);
         }
+
+        delete currNode;
+
         addNode(new Node(key, value));
         mp[key] = head->next;
     }
