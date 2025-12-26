@@ -12,32 +12,27 @@
 class Solution {
 public:
     int preIdx = 0;
-    
-    int Search(vector<int>& inorder, int left, int right, int val) {
-        for(int i=left; i<=right; i++) {
-            if(inorder[i] == val) {
-                return i;
-            }
-        }
-        return -1;
-    }
+    unordered_map<int, int> mp;
 
-    TreeNode* BT(vector<int>& preorder, vector<int>& inorder, int left, int right) {
+    TreeNode* BT(vector<int>& preorder, int left, int right) {
         if(left > right) return nullptr;
 
         int val = preorder[preIdx++];
 
         TreeNode* node = new TreeNode(val);
 
-        int inIdx = Search(inorder, left, right, val);
+        int inIdx = mp[val];
 
-        node->left = BT(preorder, inorder, left, inIdx-1);
-        node->right = BT(preorder, inorder, inIdx+1, right);
+        node->left = BT(preorder, left, inIdx-1);
+        node->right = BT(preorder, inIdx+1, right);
 
         return node;
     }
 
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        return BT(preorder, inorder, 0, inorder.size()-1);
+        for(int i=0; i<inorder.size(); i++) {
+            mp[inorder[i]] = i;
+        }
+        return BT(preorder, 0, inorder.size()-1);
     }
 };
