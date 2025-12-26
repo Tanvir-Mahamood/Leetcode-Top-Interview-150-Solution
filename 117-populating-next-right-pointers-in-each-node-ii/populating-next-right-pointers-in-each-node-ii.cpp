@@ -34,7 +34,6 @@ public:
     Node* connect(Node* root) {
         level.clear();
         solve(root, 0);
-        level.clear();
         return root;
     }
 };
