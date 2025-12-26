@@ -18,26 +18,23 @@ public:
 
 class Solution {
 public:
-    Node* head;
     vector<Node*> level;
 
     void solve(Node* node, int h) {
         if(!node) return;
 
-        node->next = level[h];
+        node->next = (h < level.size()) ? level[h] : nullptr;
+        if(h >= level.size()) level.resize(h+1, nullptr);
         level[h] = node;
 
         solve(node->right, h+1);
         solve(node->left, h+1);
-        return;
     }
 
     Node* connect(Node* root) {
-        level.resize(6001);
-        for(int i=0; i<6001; i++) level[i] = nullptr;
-
-        head = root;
+        level.clear();
         solve(root, 0);
-        return head;
+        level.clear();
+        return root;
     }
 };
