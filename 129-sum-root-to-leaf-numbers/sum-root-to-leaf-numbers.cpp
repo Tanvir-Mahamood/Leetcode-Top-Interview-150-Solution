@@ -14,12 +14,10 @@ public:
     int allSum = 0;
 
     void solve(TreeNode* node, int num) {
-        if(!node) return;
-
         num = num*10 + node->val;
 
-        solve(node->left, num);
-        solve(node->right, num);
+        if(node->left)  solve(node->left, num);
+        if(node->right) solve(node->right, num);
 
         if(!node->left && !node->right) allSum += num;
     }
