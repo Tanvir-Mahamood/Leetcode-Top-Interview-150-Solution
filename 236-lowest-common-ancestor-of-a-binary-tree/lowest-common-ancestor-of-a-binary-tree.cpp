@@ -19,7 +19,6 @@ public:
 
         if(left && !right) return left;
         if(!left && right) return right;
-
         return nullptr; // left & right, both nullptr
     }
 };
