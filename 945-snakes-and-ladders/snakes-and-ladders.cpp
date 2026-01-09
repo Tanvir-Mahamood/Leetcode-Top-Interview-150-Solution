@@ -20,7 +20,8 @@
 
 class Solution {
 public:
-    void bfs(int posVal, vector<int> &minRolls, int n, vector<vector<int>>& board) {
+    void bfs(int posVal, vector<int> &minRolls, vector<vector<int>>& board) {
+        int n = board.size();
         minRolls[posVal] = 0; // at pos 1, we can stand without rolling
         queue<int> q;
         q.push(posVal);
@@ -51,7 +52,7 @@ public:
     int snakesAndLadders(vector<vector<int>>& board) {
         int n = board.size();
         vector<int> minRolls(n*n+1, -1);
-        bfs(1, minRolls, n, board);
+        bfs(1, minRolls, board);
         return minRolls.back();
     }
 };
