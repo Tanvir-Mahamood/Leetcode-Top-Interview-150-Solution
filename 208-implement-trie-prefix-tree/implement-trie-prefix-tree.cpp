@@ -32,7 +32,7 @@ public:
         root = new Node(); // taking a root
     }
     
-    void insert(string word) {
+    void insert(string word) { //O(len(word))
         Node* node = root; // initially pointing to the root for each insertion
         for(char ch: word) {
             if(!node->containKey(ch)) {
@@ -43,7 +43,7 @@ public:
         node->setEnd();
     }
     
-    bool search(string word) {
+    bool search(string word) { //O(len(word))
         Node* node = root;
         for(char ch: word) {
             if(!node->containKey(ch)) {
@@ -54,7 +54,7 @@ public:
         return node->isEnd();
     }
     
-    bool startsWith(string prefix) {
+    bool startsWith(string prefix) { //O(len(word))
         Node* node = root;
         for(char ch: prefix) {
             if(!node->containKey(ch)) {
