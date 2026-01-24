@@ -27,42 +27,55 @@ class Trie {
 private:
     Node* root;
 
+    bool RecursiveSearch(Node* node, string word, int idx) {
+        if(idx == word.length()) {
+            return node->isEnd();
+        }
+        char ch = word[idx];
+        if(!node->containKey(ch)) {
+            return false;
+        }
+        return RecursiveSearch(node->get(ch), word, idx+1);
+    }
+
+    bool RecursiveSearchWith(Node* node, string prefix, int idx) {
+        if(idx == prefix.length()) {
+            return true;
+        }
+        char ch = prefix[idx];
+        if(!node->containKey(ch)) {
+            return false;
+        }
+        return RecursiveSearchWith(node->get(ch), prefix, idx+1);
+    }
+
+    void RecursiveInsert(Node* node, string word, int idx) {
+        if(idx == word.length()) {
+            node->setEnd();
+            return;
+        }
+        char ch = word[idx];
+        if(!node->containKey(ch)) {
+            node->put(ch, new Node());
+        }
+        RecursiveInsert(node->get(ch), word, idx+1);
+    }
+
 public:
     Trie() {
         root = new Node(); // taking a root
     }
     
     void insert(string word) { //O(len(word))
-        Node* node = root; // initially pointing to the root for each insertion
-        for(char ch: word) {
-            if(!node->containKey(ch)) {
-                node->put(ch, new Node());
-            }
-            node = node->get(ch); // move to next (referenced) node
-        }
-        node->setEnd();
+        RecursiveInsert(root, word ,0);
     }
     
     bool search(string word) { //O(len(word))
-        Node* node = root;
-        for(char ch: word) {
-            if(!node->containKey(ch)) {
-                return false;
-            }
-            node = node->get(ch); // good to go
-        }
-        return node->isEnd();
+        return RecursiveSearch(root, word, 0);
     }
     
     bool startsWith(string prefix) { //O(len(word))
-        Node* node = root;
-        for(char ch: prefix) {
-            if(!node->containKey(ch)) {
-                return false;
-            }
-            node = node->get(ch); // good to go
-        }
-        return true;
+        return RecursiveSearchWith(root, prefix, 0);
     }
 };
 
