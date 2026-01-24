@@ -32,10 +32,12 @@ private:
             return node->isEnd();
         }
         char ch = word[idx];
-        if(!node->containKey(ch)) {
+        if(node->containKey(ch)) {
+            return RecursiveSearch(node->get(ch), word, idx+1);
+        }
+        else {
             return false;
         }
-        return RecursiveSearch(node->get(ch), word, idx+1);
     }
 
     bool RecursiveSearchWith(Node* node, string prefix, int idx) {
