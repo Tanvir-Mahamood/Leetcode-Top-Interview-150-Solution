@@ -32,25 +32,27 @@ private:
     Node* root;
 
     bool RecursiveSearch(Node* node, string word, int idx) {
-        bool result;
         if(idx == word.length()) {
             return node->isEnd();
         }
 
         char ch = word[idx];
         if(ch == '.') {
+            bool result;
             for(char ch1='a'; ch1<='z'; ch1++) {
                 if(node->containKey(ch1)) {
                     result = RecursiveSearch(node->get(ch1), word, idx+1);
-                    if(result) return result;
+                    if(result) break;
                 }
             }
-            return false;
+            return result;
         }
         else if(node->containKey(ch)) {
             return RecursiveSearch(node->get(ch), word, idx+1);
         }
-        else return false;
+        else {
+            return false;
+        }
     }
 
 public:
