@@ -1,6 +1,6 @@
 class Solution {
 public:
-// Tabulation
+// Bottom Up (Tabulation)
 /*
     int climbStairs(int n) { 
         vector<int> dp(n+1, 0);
@@ -13,6 +13,7 @@ public:
 */
 
 // Space Optimised Tabulation
+/*
     int climbStairs(int n) {
         if(n <= 3) return n;
 
@@ -26,14 +27,32 @@ public:
         }
         return curr;
     }
+*/
+
+// Top-Down Approach (Memoization)
+    int solve(int n, vector<int> &dp) {
+        if(n <= 1) return 1;
+        if(dp[n] != -1) return dp[n];
+        dp[n] = solve(n-1, dp) + solve(n-2, dp);
+        return dp[n];
+    }
+
+    int climbStairs(int n) {
+        vector<int> dp(n+1, -1);
+        return solve(n, dp);
+    }
 };
 
 /*
-Tabulation
+Bottom Up (Tabulation)
 Time: O(n)
 Space: O(n)
 
-Space Optimised Tabulation
+Space Optimised Bottom Up (Tabulation)
 Time: O(n)
 Space: O(1)
+
+Top-Down Approach (Memoization)
+Time: O(n)
+Space: O(n)
 */
