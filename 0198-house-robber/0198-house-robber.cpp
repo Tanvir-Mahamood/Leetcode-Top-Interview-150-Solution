@@ -17,6 +17,7 @@ public:
 */
 
 // Space Optimised Bottom Up (Tabulation)
+/*
     int rob(vector<int>& nums) {
         int first = 0;
         int second = 0;
@@ -29,14 +30,38 @@ public:
         }
         return curr;
     }
+*/
+
+// Top-Down Approach (Memoization)
+    int solve(vector<int> &nums, int pos, vector<int> &dp) {
+        if(pos == 0) return nums[pos];
+        if(pos < 0) return 0;
+        if(dp[pos] != -1) return dp[pos];
+
+        int pick = nums[pos] + solve(nums, pos-2, dp); // if we pick the current element
+        int not_pick = solve(nums, pos-1, dp); // if not...
+
+        return dp[pos] = max(pick, not_pick);
+    }
+
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> dp(n, -1);
+        return solve(nums, n-1, dp);
+    }
+
 };
 
 /*
-Bottom Up (tabular)
+Bottom Up (Tabulation)
 Time: O(n)
 Space: O(n)
 
-Space Optimised Bottom Up (tabular)
+Space Optimised Bottom Up (Tabulation)
 Time: O(n)
 Space: O(1)
+
+Top-Down Approach (Memoization)
+Time: O(n)
+Space: O(n)
 */
