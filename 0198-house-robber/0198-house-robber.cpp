@@ -1,10 +1,10 @@
 class Solution {
 public:
+// Bottom Up (Tabulation)
+/*
     int rob(vector<int>& nums) {
         int n = nums.size();
         if(n == 1) return nums[0];
-        if(n == 2) return max(nums[0], nums[1]);
-
 
         vector<int> dp(n, 0);
         dp[0] = nums[0];
@@ -14,10 +14,29 @@ public:
         }
         return dp[n-1];
     }
+*/
+
+// Space Optimised Bottom Up (Tabulation)
+    int rob(vector<int>& nums) {
+        int first = 0;
+        int second = 0;
+        int curr;
+
+        for(int num: nums) {
+            curr = max((num+first), second);
+            first = second;
+            second = curr;
+        }
+        return curr;
+    }
 };
 
 /*
 Bottom Up (tabular)
 Time: O(n)
 Space: O(n)
+
+Space Optimised Bottom Up (tabular)
+Time: O(n)
+Space: O(1)
 */
