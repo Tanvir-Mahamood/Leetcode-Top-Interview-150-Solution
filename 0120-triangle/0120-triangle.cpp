@@ -1,8 +1,9 @@
 class Solution {
 public:
+/*
     int minimumTotal(vector<vector<int>>& triangle) {
         int n = triangle.size();
-        vector<vector<int>> grid(n,vector<int>(n, INT_MAX));
+        vector<int> grid(n, INT_MAX);
         grid[0][0] = triangle[0][0];
 
         for(int i=1; i<n; i++) {
@@ -22,4 +23,29 @@ public:
 
         return minAns;
     }
+*/
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int n = triangle.size();
+        vector<int> dp = triangle[n-1];
+
+        for(int i=n-2; i>=0; i--) {
+            for(int j=0; j<=i; j++) {
+                dp[j] = triangle[i][j] + min(dp[j], dp[j+1]);
+            }
+        }
+
+        return dp[0];
+    }
 };
+
+/*
+First Solution:
+Time: O(n^2)
+Space: O(n^2)
+
+Second Solution:
+Time: O(n^2)
+Space: O(n)
+
+*/
+
