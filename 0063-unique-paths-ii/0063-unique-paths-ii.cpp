@@ -13,8 +13,7 @@ public:
 
         int wayFromLeft = (isvalid(obstacleGrid, x, y-1)) ? solver(obstacleGrid, x, y-1, mem) : 0;
         int wayFromTop =  (isvalid(obstacleGrid, x-1, y)) ? solver(obstacleGrid, x-1, y, mem) : 0;
-        mem[x][y] = wayFromLeft + wayFromTop;
-        return (wayFromLeft + wayFromTop);
+        return mem[x][y] = wayFromLeft + wayFromTop;
     }
 
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
@@ -23,8 +22,7 @@ public:
         if(obstacleGrid[row-1][col-1] == 1) return 0;
         vector<vector<int>> mem(row, vector<int>(col, -1));
         mem[0][0] = 0;
-        
+
         return solver(obstacleGrid, row-1, col-1, mem);
-        
     }
 };
