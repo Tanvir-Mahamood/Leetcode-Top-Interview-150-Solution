@@ -29,6 +29,7 @@ public:
         // return solver(0, 1, 2, prices, dp); 
 
         // -> Approach2: Tabulation
+        /*
         vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(2,vector<int>(3, 0))); // (n+1) * 2 * 3
 
         for(int idx=0; idx<n; idx++) { // handling base case: if(limit == 0) return 0;
@@ -61,6 +62,31 @@ public:
         }
 
         return dp[0][1][2];
+        */
+
+        // -> Approach3: Space Optimized tabulation
+        vector<vector<int>> after(2, vector<int> (3, 0)); 
+        vector<vector<int>> current(2, vector<int> (3, 0)); 
+
+        for(int idx=n-1; idx>=0; idx--) {
+            for(int canBuy=0; canBuy<=1; canBuy++) {
+                for(int limit=1; limit<=2; limit++) {
+                    if(canBuy == 1) {
+                        int buy = - prices[idx] + after[0][limit];
+                        int not_buy = after[1][limit];
+                        current[canBuy][limit] = max(buy, not_buy);
+                    }
+                    else {
+                        int sell = prices[idx] + after[1][limit-1];
+                        int not_sell = after[0][limit];
+                        current[canBuy][limit] = max(sell, not_sell);
+                    }
+                }
+            }
+            after = current;
+        }
+
+        return after[1][2];
     }
 };
 
@@ -76,4 +102,8 @@ Space Complexity: O(n)
 Total iteration: n * 2 * 3
 Time Complexity: O(n)
 Space Complexity: O(n)
+
+-> Approach3: Space Optimized tabulation
+Time Complexity: O(n)
+Space Complexity: O(1)
 */
